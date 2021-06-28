@@ -1,0 +1,1061 @@
+{% extends "web/layout.html" %}
+
+{% block body %}
+<style>
+
+    .click {
+        width: 60px;
+        height: 22px;
+        margin-left: 3px;
+        margin-right: 3px;
+        
+    }
+
+    .scroll {
+        height: 22px;
+        width: 50px;
+    }
+
+    .write{
+        height:22px;
+        width: 200px;
+    }
+
+    .wait {
+        height: 22px;
+        width: 100px;
+    }
+
+    .actionClick {
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(253, 211, 211);
+    }
+
+    .actionScroll {
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(255, 202, 141);
+    }
+
+    .actionWrite{
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(255, 249, 130);
+    }
+
+    .actionPress {
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(141, 255, 147);
+    }
+
+
+    .actionLoop {
+        background-color: linen;
+        border-style: solid; 
+        border-width: 2px;
+        margin:20px; 
+    }
+
+    .actionWait {
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(203, 211, 248);
+    }
+
+    .actionDrag {
+        border-style: solid; 
+        border-width: 2px;
+        margin:20px; 
+        background-color: rgb(236, 179, 235);
+    }
+
+    .actionControl {
+        border-style: solid; 
+        border-width: 2px;
+        border-radius: 25px;
+        margin:20px; 
+        background-color: rgb(172, 255, 214);
+    }
+
+    /* */
+    .dragclick {
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(253, 211, 211);
+        cursor: pointer;
+    }
+
+    .dragscroll {
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(255, 202, 141);
+        cursor: pointer;
+    }
+
+    .dragwrite{
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(255, 249, 130);
+        cursor: pointer;
+    }
+
+    .dragpress {
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(141, 255, 147);
+        cursor: pointer;
+    }
+
+
+    .dragloop {
+        background-color: linen;
+        border-style: solid; 
+        border-width: 1px;
+        cursor: pointer;
+    }
+
+    .dragwait {
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(203, 211, 248);
+        cursor: pointer;
+    }
+
+    .dragdrag {
+        border-style: solid; 
+        border-width: 1px;
+        background-color: rgb(236, 179, 235);
+        cursor: pointer;
+    }
+
+    .dragcontrol {
+        border-style: solid; 
+        border-width: 1px;
+        border-radius: 25px;
+        background-color: rgb(172, 255, 214);
+        cursor: pointer;
+    }
+
+    .unaccessable_loop {
+        background-color: rgb(129, 124, 124);
+        border-style: solid; 
+        border-width: 2px;
+        border-color: rgb(219, 219, 219);
+    }
+
+    .name {
+        font-weight: bold;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .dname {
+        font-weight: bold;
+        font-size: 13px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .coords {
+        font-size: 11px;
+    }
+
+    .hold {
+        margin-left: 10px;
+        margin-right: 2px;
+    }
+
+    @media (min-width: 700px) {
+    .sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 90%;
+  margin-top: 0px;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px; 
+  overflow-y: scroll; 
+  height: 600px;
+  border-color: rgb(207, 207, 207);
+    }
+    
+    .content {
+        border-style: solid; 
+        margin-left: 230px; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        border-radius: 20px;
+        background-color: rgb(241, 241, 241);
+        border-width: 2px;
+        border-color: #b4b4b4;;
+    }
+
+    .alert {
+        border-style: solid; 
+        margin-left: 230px; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    }
+    @media (max-width: 699px){
+        .sidebar {
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+        margin-top: 0px;
+        padding: 10px; 
+        overflow-y: scroll; 
+        height: 550px;
+        border-radius: 15px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(207, 207, 207);
+    }
+    .content {
+        border-style: solid; 
+        margin-left: 20px; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        border-radius: 20px;
+        background-color: rgb(241, 241, 241);
+        border-width: 2px;
+        border-color: #b4b4b4;;
+    }
+
+    .alert {
+        border-style: solid; 
+        margin-left: 20px; 
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    }
+
+</style>
+<script>
+    var proper = true
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("run_form").addEventListener("submit", function () {
+            
+            if (proper) {
+            watch_end()
+            document.getElementById("save_item").setAttribute("disabled", true)
+            document.getElementById("run_item").setAttribute("disabled", true)
+            document.getElementById("on_off").setAttribute("disabled", true)
+            a = Date.now()
+            d = setInterval(function () {
+            current = Date.now()
+            document.title = parseInt((a - Date.now())/1000 + 4)
+            document.getElementById("run_item").value = parseInt((a - Date.now())/1000 + 4)
+            if (current - a >= 3000) {
+                clearInterval(d)
+                document.title = 'Running...' 
+                document.getElementById("run_item").value = "Running..."
+            }
+            }, 100)
+            
+        }
+        })
+    })
+    
+    function watch_end() {
+        watch = setInterval(function () {
+            fetch('jsonstatus')
+            .then(response => response.json())
+            .then(status => {
+            if (!status["status"]) {
+                clearInterval(watch)
+                clearInterval(fs)
+                document.getElementById("save_item").removeAttribute("disabled")
+                document.getElementById("run_item").removeAttribute("disabled")
+                document.getElementById("on_off").removeAttribute("disabled")
+                document.title = 'Tedious.com'
+                document.getElementById("run_item").value = "Run"
+                document.getElementById("failsafe").value = "Failsafe Screen will activate when bot is running."
+                console.log("end")
+            }
+            });
+        }, 10)
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+    
+    function keep_values() {
+        all = document.getElementById('div1').getElementsByTagName("div")
+        for (var a=0; a < all.length; a++) {
+            id = parseInt(all[a].id.slice(6))
+            type = all[a].innerText.split("\n")[0]
+            if (type == "Click") {
+                all[a].querySelector("#xpos" + id).setAttribute("value", all[a].querySelector("#xpos" + id).value) 
+                all[a].querySelector("#ypos" + id).setAttribute("value", all[a].querySelector("#ypos" + id).value) 
+            } else if (type == "Scroll") {
+                all[a].querySelector("#scroll" + id).setAttribute("value", all[a].querySelector("#scroll" + id).value)
+            } else if (type == "Write") {
+                all[a].querySelector("#write" + id).setAttribute("value", all[a].querySelector("#write" + id).value)
+            } else if (type == "Press") {
+                
+                for (var s = 0; s < all[a].querySelector("#press" + id).options.length; s++) {
+                    if (all[a].querySelector("#press" + id).options[s].innerText == all[a].querySelector("#press" + id).value) {
+                        all[a].querySelector("#press" + id).options[s].selected = true;
+                        break;
+                    }
+                }
+
+                
+            } else if (type == "Loop") {
+                all[a].querySelector("#loop" + id).setAttribute("value", all[a].querySelector("#loop" + id).value)
+            } else if (type == "Wait") {
+                all[a].querySelector("#wait" + id).setAttribute("value", all[a].querySelector("#wait" + id).value)
+            } else if (type == "Drag") {
+                all[a].querySelector("#x_input_start" + id).setAttribute("value", all[a].querySelector("#x_input_start" + id).value)
+                all[a].querySelector("#y_input_start" + id).setAttribute("value", all[a].querySelector("#y_input_start" + id).value)
+                all[a].querySelector("#x_input_end" + id).setAttribute("value", all[a].querySelector("#x_input_end" + id).value)
+                all[a].querySelector("#y_input_end" + id).setAttribute("value", all[a].querySelector("#y_input_end" + id).value)
+                all[a].querySelector("#wait_for_drag" + id).setAttribute("value", all[a].querySelector("#wait_for_drag" + id).value)
+            } else if (type == "Control") {
+                for (var s = 0; s < all[a].querySelector("#control_button" + id).options.length; s++) {
+                    if (all[a].querySelector("#control_button" + id).options[s].innerText == all[a].querySelector("#control_button" + id).value) {
+                        all[a].querySelector("#control_button" + id).options[s].selected = true;
+                        break;
+                    }
+                }
+
+                for (var q = 0; s < all[a].querySelector("#control_key" + id).options.length; q++) {
+                    if (all[a].querySelector("#control_key" + id).options[q].innerText == all[a].querySelector("#control_key" + id).value) {
+                        all[a].querySelector("#control_key" + id).options[q].selected = true;
+                        break;
+                    }
+                }
+            }
+
+            // NEW ACTION
+            //else if (type == new_action) {
+                //all[a].querySelector("#new_action" + id).setAttribute("value", all[a].querySelector("#new_action" + id).value)
+            //}
+            
+        }
+    }
+
+
+
+    function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    keep_values()
+    }
+
+    function delete_loop(i) {
+        current_loop = parseInt(document.getElementById('action' + i).innerText.split("\n")[3])
+        all = document.getElementById('div1').getElementsByTagName("div")
+        for (var a=0; a < all.length; a++) {
+            if (all[a].innerText.split("\n")[3] == document.getElementById("action" + i).innerText.split("\n")[3] && all[a].id != "action" + i) {
+                current_loop = parseInt(all[a].innerText.split("\n")[3])
+                all[a].remove()
+                break;
+            }
+        }
+        document.getElementById("action" + i).remove()
+        if (loop == current_loop) {
+        document.getElementById("drag_loop").setAttribute("draggable", "true")
+        document.getElementById("drag_endloop").setAttribute("draggable", "false")
+
+        document.getElementById("drag_loop").setAttribute("class", "dragloop")
+        document.getElementById("drag_endloop").setAttribute("class", "unaccessable_loop")
+        }
+    }
+
+    function delete_start_loop_if(i) {
+        current = 1
+         a = parseInt(document.getElementById("action" + i).innerText.split("\n")[3][0])
+         all = document.getElementById('div1').getElementsByTagName("div")
+         if (a < loop) {
+            for (var b=0; b < all.length; b++) {
+                if (all[b].innerText.split("\n")[3] == document.getElementById("action" + i).innerText.split("\n")[3] && all[b].id != "action" + i) {
+                current = parseInt(all[b].innerText.split("\n")[3])
+                
+                all[b].remove()
+            
+                break;
+            }
+        }
+         }
+
+         
+    }
+
+
+    function delete_elem(i) {
+        if (document.getElementById("action" + i).innerText.split("\n")[0] == "Loop") {
+            delete_loop(i)
+        } else if (document.getElementById("action" + i).innerText.split("\n")[0] == "Endloop") {
+            if (parseInt(document.getElementById("action" + i).innerText.split("\n")[3]) == loop){
+                document.getElementById("drag_loop").setAttribute("draggable", "false")
+                document.getElementById("drag_endloop").setAttribute("draggable", "true")
+                document.getElementById("drag_loop").setAttribute("class", "unaccessable_loop")
+                document.getElementById("drag_endloop").setAttribute("class", "dragloop")
+            }
+            delete_start_loop_if(i)
+            document.getElementById("action" + i).remove()
+        } else {
+           document.getElementById("action" + i).remove()  
+        }
+    }
+
+
+    function button(i) {
+        return "<button class='btn btn-danger btn-sm rounded-9' style='float:right; font-size: 9px; height: 24px; border-radius: 25px;' onclick='delete_elem("+ i +")'>Delete</button>" 
+    }
+
+    function loopbutton(i) {
+        return "<button class='btn btn-danger btn-sm rounded-0' style='float:right; font-size: 9px; height: 24px;' onclick='delete_elem("+ i +")'>Delete</button>" 
+    }
+
+    function select(i) {
+        a = document.getElementById("action" + i).querySelector("#press" + i)
+        
+        for (var s = 0; s < a.options.length; s++) {
+            if (a.options[s].innerText == a.value) {
+                a.options[s].setAttributeNode(document.createAttribute("selected"))
+            } else {
+                a.options[s].removeAttribute("selected")
+            }
+            }
+    }
+
+    function controlselect(i, type) {
+        console.log(type)
+        if (type == "button") {
+            a = document.getElementById("action" + i).querySelector("#control_button" + i)
+        } else if (type == "key") {
+            a = document.getElementById("action" + i).querySelector("#control_key" + i)
+        }
+        
+        for (var s = 0; s < a.options.length; s++) {
+            if (a.options[s].innerText == a.value) {
+                a.options[s].setAttributeNode(document.createAttribute("selected"))
+            } else {
+                a.options[s].removeAttribute("selected")
+            }
+            }
+    }
+
+    let loop = 0
+    function form(i, type) {
+        if (type == "Click") {
+           return "<span class='coords'> at x:</span><input id=xpos"+ i +" type='number' class='click' min=0></input><span class='coords'>, y:</span><input id=ypos"+i+" type='number' class='click' min=0></input>" 
+       
+        } else if (type == "Scroll") {
+            return "<span class='coords'>for </span><input id=scroll" + i + " type='number' class='scroll'></input><span class='coords'> clicks</span>"
+        
+        } else if (type == "Write") {
+            return '"<input id=write' + i + ' class="write"></input>"'
+        
+        } else if (type == "Press") {
+            
+            let options = ['enter', 'return', 'tab', 'space', 'delete', 'up', 'down', 'left', 'right']
+            let string = "<select id=press"+i+" onchange='select("+i+")'>"
+            for (var i = 0; i < options.length; i++) {
+                string += "<option value="+options[i]+">" + options[i] + "</option>"
+            }
+            string += "</select>"
+            return string
+       
+        } else if (type == "Loop") {
+            loop ++;
+            document.getElementById("drag_loop").setAttribute("draggable", "false")
+            document.getElementById("drag_endloop").setAttribute("draggable", "true")
+            document.getElementById("drag_loop").setAttribute("class", "unaccessable_loop")
+            document.getElementById("drag_endloop").setAttribute("class", "dragloop")
+            return  "<input  type='number' id=loop" + i + " placeholder='iterations' style=' margin-left: 1%;'></input><br><div style='margin-left: 50%; display: inline-block' id='space' min=0>" + loop + "</div>"
+       
+        } else if (type == "Wait"){
+            return "<span class='coords'>for </span><input type='number' id=wait" + i + " min=0 class='wait'></input><span class='coords'> milliseconds</span>"
+        
+        } else if (type == "Drag") {
+            return "<span class='coords'>from x:</span><input type='number' id=x_input_start" + i + " class='click'><span class='coords'>, y:</span></input><input type='number' id=y_input_start"+ i +" class='click' min=0></input><span class='coords'> to x:</span><input type='number' id=x_input_end" + i + " class='click' min=0><span class='coords'>, y:</span></input><input type='number' id=y_input_end"+ i +" class='click' min=0></input><span class='coords'>for </span><input type='number' id=wait_for_drag" + i + " min=0 class='wait'></input><span class='coords'> milliseconds</span><input type=checkbox id=hold" + i +" class=hold checked onchange=hold("+ i +")></input><strong><span class='coords'>Hold</span></strong>"
+
+        } else if (type == "Control") {
+            let options = ['none', 'enter', 'return', 'tab', 'space', 'delete', 'up', 'down', 'left', 'right', 'esc', 'shift', 'option', 'capslock', 'fn']
+            let string = "<span class='coords'>press </span><strong>command</strong><span class='coords'> + </span><select id=control_button"+i+" onchange='controlselect("+i+", `button`)'>"
+            for (var aa = 0; aa < options.length; aa++) {
+                string += "<option value="+options[aa]+">" + options[aa] + "</option>"
+            }
+            string += "</select><span class='coords'> + </span>"
+
+            let key_options = ['none','!', '#', '$', '%', '&', "'", '(',
+            ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7',
+            '8', '9', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '`',
+            'a', 'b', 'c', 'd', 'e','f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~']
+
+            string += "<select id=control_key"+i+" onchange='controlselect("+i+", `key`)'>"
+            for (var bb = 0; bb < key_options.length; bb++) {
+                string += "<option value="+key_options[bb]+">" + key_options[bb] + "</option>"
+            }
+            string += "</select>"
+            return string
+        
+        // NEW ACTION
+        //} else if (type == "new_action") {
+
+        //    return 'form'
+
+        } else {
+            document.getElementById("drag_loop").setAttribute("draggable", "true")
+            document.getElementById("drag_endloop").setAttribute("draggable", "false")
+            document.getElementById("drag_loop").setAttribute("class", "dragloop")
+            document.getElementById("drag_endloop").setAttribute("class", "unaccessable_loop")
+            return "<br><div style=' margin-left: 50%; display: inline-block' id='space'>" + loop + "</div>";
+        }
+    }
+
+    function action(i ,src) {
+        if (src == "Loop" || src == "Endloop") {
+            return "<div id=action"+ i +" ondrop='drop(event,action"+ i+")' ondragover='allowDrop(event)' class='actionLoop'><span class='name'>"
+            + src +"</span>"+ loopbutton(i) + form(i, src)
+            +"</div>"
+        } else if (src == "Drag"){
+            return "<div id=action" + i + " ondrop='drop(event,action"+ i+")' ondragover='allowDrop(event)' class='actionDrag'><span class='name'>"
+            + src + "</span>" + loopbutton(i) + form(i, src) + "</div>"
+        }
+        return "<div id=action"+ i +" ondrop='drop(event,action"+ i+")' ondragover='allowDrop(event)' class=action"+ src +"><span class='name'>"
+            + src +"</span>"+ button(i) + form(i, src)
+            +"</div>"
+    }
+
+    function loop_error_search() {
+        all = document.getElementById('div1').querySelectorAll('[id^="action"]')
+        let loops = {}
+        for (var q = 0; q < all.length; q++) {
+            if (all[q].innerText.split("\n")[0] == "Loop"){
+                loops[q] = all[q].innerText.split("\n")[3][0] + "s"
+            }
+            else if (all[q].innerText.split("\n")[0] == "Endloop"){
+                loops[q] = all[q].innerText.split("\n")[3][0] + "e"
+            }
+                
+        }
+       
+        //check number of loops and endloops
+        loop_values = Object.values(loops)
+        let loop_nums = []
+        let num = []
+        for (var i = 0; i < loop_values.length; i++) {
+            loop_nums.push(loop_values[i].slice(0, -1))
+            if (!num.includes(loop_values[i].slice(0, -1))) {
+                num.push(loop_values[i].slice(0, -1))
+            }
+        }
+
+        for (var t = 0; t < num.length; t++) {
+            let occurences = 0
+            for (var h = 0; h < loop_nums.length; h++) {
+                if (num[t] == loop_nums[h]) {
+                    occurences++;
+                }
+            }
+            if (occurences != 2) {
+                alert_div("Invalid number of loops and endloops!")
+                return false;
+            }
+        }
+        //check order of loops and endloops
+        for (var o = 0; o < num.length; o++) {
+            if (loop_values.indexOf(num[o] + "e") < (loop_values.indexOf(num[o] + "s"))) {
+                alert_div("Invalid order of loops and endloops!")
+                return false;
+            }
+        }
+        
+        //check interlocking loops and endloops
+        for (var m = 0; m < num.length; m++) {
+            if (((parseInt(loop_nums.lastIndexOf(num[m])) - parseInt(loop_nums.indexOf(num[m]))) % 2) != 1) {
+                alert_div("Invalid loop structure!")
+                return false;
+            }
+        }
+
+        close_alert()
+        return true;
+    }
+
+    function failsafe_error_search() {
+        if (!document.getElementById("failsafepassword").value) {
+            alert_div("Failsafe Password required! (password that will end bot from running)")
+            return false;
+        }
+        return true
+    }
+
+    function sleep(milliseconds) {
+    
+    const date = Date.now();
+     let currentDate = null;
+    do {
+    currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+    }
+
+
+
+    function save(request) {
+        if (!loop_error_search()) {
+            proper = false
+            return false;
+        }
+
+        if (!failsafe_error_search()) {
+            proper = false
+            return false;
+        }
+
+        window.onbeforeunload = null;
+        
+        close_alert()
+        all = document.getElementById('div1').getElementsByTagName("div")
+        fetch("/delete", {
+            method: 'POST',
+            body: JSON.stringify({
+            bot_id: "{{ bot_id }}"
+            })
+        })
+        console.log("start")
+        sleep(1500)
+        
+        for (var i=0; i < all.length; i++) {
+            if (all[i].id == 'space'){
+            } else  {    
+            
+            if (all[i].innerText.split("\n")[0] == "Click") {
+                
+                fetch('/jsonclick', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                x_position: parseInt(all[i].querySelector("#xpos" + all[i].id.split("action")[1]).value),
+                y_position: parseInt(all[i].querySelector("#ypos" + all[i].id.split("action")[1]).value)
+                })
+                })
+            } else if (all[i].innerText.split("\n")[0] == "Scroll"){
+                
+                
+                fetch('/jsonscroll', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                amount: parseInt(all[i].querySelector("#scroll" + all[i].id.split("action")[1]).value)
+                })
+                })
+            } else if (all[i].innerText.split("\n")[0] == "Write") {
+                
+                
+                fetch('/jsonwrite', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                string: all[i].querySelector("#write" + all[i].id.split("action")[1]).value
+                })
+                })
+            } else if (all[i].innerText.split("\n")[0] == "Press") {
+
+
+                fetch('/jsonpress', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                button: all[i].querySelector("#press" + all[i].id.split("action")[1]).value
+                })
+                })
+                
+            } else if (all[i].innerText.split("\n")[0] == "Loop") {
+                start = all[i].innerText.split("\n")[3][0]
+                end = find_endloop(start)
+
+                fetch('/jsonloop', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order_start: i,
+                order_end: end,
+                iterations: all[i].querySelector("#loop" + all[i].id.split("action")[1]).value
+                })
+                })
+            } else if (all[i].innerText.split("\n")[0] == "Wait") {
+
+                fetch('/jsonwait', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                milliseconds: all[i].querySelector("#wait" + all[i].id.split("action")[1]).value
+                })
+                })
+
+            } 
+
+            else if (all[i].innerText.split("\n")[0] == "Drag") {
+                fetch('/jsondrag', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                startx: all[i].querySelector('#x_input_start' + all[i].id.split("action")[1]).value,
+                starty: all[i].querySelector('#y_input_start' + all[i].id.split("action")[1]).value,
+                endx: all[i].querySelector('#x_input_end' + all[i].id.split("action")[1]).value,
+                endy: all[i].querySelector('#y_input_end' + all[i].id.split("action")[1]).value,
+                time: all[i].querySelector('#wait_for_drag' + all[i].id.split("action")[1]).value,
+                hold: all[i].querySelector("#hold" + all[i].id.split("action")[1]).hasAttribute("checked")
+                })
+                })
+
+                }   
+
+            else if (all[i].innerText.split("\n")[0] == "Control") {
+
+                fetch('/jsoncontrol', {
+                method: 'POST',
+                body: JSON.stringify({
+                bot_id: "{{bot_id}}",
+                order: i,
+                button: all[i].querySelector("#control_button" + all[i].id.split("action")[1]).value,
+                key: all[i].querySelector("#control_key" + all[i].id.split("action")[1]).value
+                })
+                })
+
+                }  
+
+            // NEW ACTION
+            //else if (all[i].innerText.split("\n")[0] == "new_action") {
+
+            //    fetch('/jsonnew_action', {
+            //    method: 'POST',
+            //    body: JSON.stringify({
+            //    bot_id: "{{bot_id}}",
+            //    order: i,
+            //    info: info
+            //    })
+            //    })
+
+            //    }          
+            }
+        }
+        sleep(1500)
+        console.log("finished save")
+        if (request == "run") {
+        fetch('/jsonstatus', {
+        method: 'PUT',
+        body: JSON.stringify({
+          status: true
+        })
+        })
+        string = ""
+            fs = setInterval(failsafe, 200);
+            console.log("started failsafe") 
+        }
+        
+        proper = true
+        return true;
+    }
+
+    function find_endloop(start) {
+        
+        all = document.getElementById('div1').querySelectorAll('[id^="action"]')
+        for (var q = 0; q < all.length; q++) {
+            if (all[q].innerText.split("\n")[0] == "Endloop" && all[q].innerText.split("\n")[3][0] == start){
+                return q
+            }
+                
+        }
+    }
+
+    let i = -1;
+    let is_child = false
+    function drop(ev, id) {
+        ev.preventDefault();
+        
+        all = document.getElementById('div1').getElementsByTagName("div")
+        keep_values()
+    if (id == 'div1') {
+        if (!is_child) {
+            i++;
+        var src = document.getElementById(ev.dataTransfer.getData("text")).innerText
+        document.getElementById('div1').innerHTML += action(i, src) 
+        } else {
+            
+            is_child = false
+        }
+      } else {
+        var src = document.getElementById(ev.dataTransfer.getData("text")).innerText
+        
+        var index = document.getElementById('div1').innerHTML.indexOf(document.getElementById(id.id).outerHTML) + document.getElementById(id.id).outerHTML.length
+        i++;
+        
+        document.getElementById('div1').innerHTML = document.getElementById('div1').innerHTML.slice(0, index) +  
+        action(i, src) + document.getElementById('div1').innerHTML.slice(index)
+        
+        is_child = true
+      }
+    }
+
+    function detector() {
+        if (document.getElementById('on_off').value == "on") {
+            //turning detector off
+            document.getElementById('on_off').value = "off"
+            document.getElementById('on_off').innerText = "Turn On"
+            clearInterval(interval)
+        } else {
+            //turning detector on
+            document.getElementById('on_off').value = "on"
+            document.getElementById('on_off').innerText = "Turn Off"
+            interval = setInterval(function () {
+            fetch("/mousecoords")
+            .then(response => response.json())
+            .then(data => {
+            const x = data.x
+            const y = data.y
+            document.getElementById("x_value").value = x
+            document.getElementById("y_value").value = y
+            });
+        
+         }, 50)
+        }
+    }
+
+    function failsafe_out(string) {
+        document.getElementById("failsafe").value = string
+    }
+
+    function clear_screen() {
+        document.getElementById("failsafe").value = "Failsafe Screen will activate when bot is running."
+    }
+
+    function imageExists(image_url){
+        try {
+        var http = new XMLHttpRequest();
+        http.open('HEAD', image_url, false);
+        http.send();
+        }
+        catch {
+            alert_div("Error while handling image. Please choose another!")
+            return false
+        }
+
+        if (http.status == 404) {
+            alert_div("Image doesn't exist!")
+        }
+        return http.status != 404;
+    }   
+
+    function peek_image(){
+        if (document.getElementById("image_form").value != "" && imageExists(document.getElementById("image_form").value) && document.getElementById("image_form").value.length < 255) {
+            document.getElementById("file_image").src = document.getElementById("image_form").value
+            document.getElementById("file_image").setAttribute("style", "visibility: none; width: 140px; position: absolute; z-index: 1; border-style: solid; border-color: #9649c9; border-width: 2px;")
+        }
+    }
+    function hide_image() {
+        document.getElementById("file_image").setAttribute("style", "visibility: hidden; width: 140px; position: absolute; z-index: 1;")
+    }
+
+    function file_name_too_long() {
+        if (document.getElementById("image_form").value.length > 255) {
+            alert_div("Image Address URI/URL too long!")
+            document.getElementById("file_image").src = ""
+        } else {
+            close_alert()
+            error = false
+        } 
+    }
+
+    function alert_div(string) {
+        document.getElementById("alert").style = "visibility: none;  z-index: 1;"
+        document.getElementById("alert").innerHTML = string
+    }
+
+    function close_alert() {
+        document.getElementById("alert").style = "visibility: hidden;  z-index: 1;"
+    }
+
+    function hold(id) {
+        if (document.querySelector("#hold" + id).hasAttribute("checked")) {
+            document.querySelector("#hold" + id).removeAttribute("checked")
+        } else {
+            document.querySelector("#hold" + id).setAttributeNode(document.createAttribute("checked"))
+        }
+    }
+
+    var string = "";
+    function failsafe(){ 
+        fetch('/listen')
+        .then(response => {
+
+            if (response.status == 500 || response.ok != true){
+                return ""
+            }
+           return response.json() 
+        }
+        )
+        .then(data => {
+            if (data[0] == "delete") {
+                if (string.length > 0) {
+                    string = string.slice(0, -1)
+                    console.log(string); 
+                    failsafe_out(string)
+                }
+            }
+            if (data[0] == "space") {
+                string += " "
+                console.log(string);
+                failsafe_out(string)
+            }
+            if (data[0] != "none" && data[0] != "space" && data[0] != "delete" && data[0] != undefined && data[0] != null && data[0] != "") {
+                string += data[0] 
+                console.log(string); 
+                failsafe_out(string)
+            }
+
+            if (string == document.getElementById("failsafepassword").value && string != "") {
+                fetch('/jsonstatus', {
+                method: 'PUT',
+                body: JSON.stringify({
+                status: false
+            })
+            })
+            console.log("failsafe activated")
+            clear_screen()
+            clearInterval(fs)
+            }
+        }
+        
+    ).catch(function(error) {
+        console.log("failed fetch request");
+    });
+    }
+</script>
+<body>
+
+<div class="sidebar">
+    <input class="form-control" placeholder="Image Address" style="font-size: 1vw;" onmouseover="peek_image()" onmouseout="hide_image()" form="save_form" name="image" id="image_form" oninput="file_name_too_long()">
+    <br>
+    <img src="" id="file_image" style="visibility: hidden; width: 140px; position: absolute; z-index: 1;" height=100px width=100px>
+    <input type="text" readonly size="3" style="width: 150px; height: 40px;" id="failsafe" class="form-control input" value="Failsafe Screen will activate when bot is running.">
+    <br>
+    <input placeholder="Failsafe Password" form="save_form" class="form-control" name="failsafe" style="font-size: 1vw;" id="failsafepassword">
+    <br>
+    <input placeholder="Title" form="save_form" class="form-control" name="title">
+    <br>
+    <textarea class="form-control" rows="4" form="save_form" style="resize: none; font-size: 14px;" id="description" placeholder="Description" name="description"></textarea>
+    <br>
+    <div id="drag_click" draggable="true" ondragstart="drag(event)" class="dragclick">
+    <span class="dname">Click</span>
+    </div>
+    <br>
+    <div id="drag_scroll" draggable="true" ondragstart="drag(event)" class="dragscroll">
+        <span class="dname">Scroll</span>
+    </div>
+    <br>
+    <div id="drag_write" draggable="true" ondragstart="drag(event)" class="dragwrite">
+        <span class="dname">Write</span>
+    </div>
+    <br>
+    <div id="drag_press" draggable="true" ondragstart="drag(event)" class="dragpress">
+        <span class="dname">Press</span>
+    </div>
+    <br>
+    <div id="drag_loop" draggable="true" ondragstart="drag(event)" class="dragloop">
+        <span class="dname">Loop</span>
+    </div>
+    <br>
+    <div id="drag_endloop" draggable="false" ondragstart="drag(event)" class="unaccessable_loop">
+        <span class="dname">Endloop</span>
+    </div>
+    <br>
+    <div id="drag_wait" draggable="true" ondragstart="drag(event)" class="dragwait">
+        <span class="dname">Wait</span>
+    </div>
+    <br>
+    <div id="drag_drag" draggable="true" ondragstart="drag(event)" class="dragdrag">
+        <span class="dname">Drag</span>
+    </div>
+    <br>
+    <div id="drag_control" draggable="true" ondragstart="drag(event)" class="dragcontrol">
+    <span class="dname">Control</span>
+    </div>
+    <br>
+
+    <!--
+    <div id="drag_" draggable="true" ondragstart="drag(event)" class="dragnew_action">
+    <span class="dname">New_action</span>
+    </div>
+    <br>
+    -->
+
+
+
+    <form action="/create" method="post" onsubmit="return save('save')" id="save_form" >
+        {% csrf_token %} 
+        <input type="hidden" value="save" name="action">
+        <input type="hidden" value="{{ bot_id }}" name="bot_id">
+        <input type="submit" value="Save" class="page-link" id="save_item">
+    </form>
+    
+    <form action="/create" method="post" onsubmit="return save('run')" id="run_form" >
+        {% csrf_token %} 
+        <input type="hidden" value="run" name="action"> 
+        <input type="hidden" value="{{ bot_id }}" name="bot_id">
+        <input type="submit" value="Run" class="page-link" id="run_item">
+    </form>
+
+    <br>
+    <label for="x_value">x: </label>
+    <input type="text" readonly size="3" style="display: inline-block; width: 110px;" id="x_value" class="form-control input-lg">
+    <br>
+    <label for="y_value">y: </label>
+    <input type="text" readonly size="3" style="display: inline-block; width: 110px;" id="y_value" class="form-control input-lg">
+    <br>
+    <br>
+    <button type="button" class="btn btn-secondary btn-sm" value="off" onclick="detector()" id="on_off">Turn On</button>
+</div>
+<div class="alert alert-danger" role="alert" style="visibility: hidden;  z-index: 1;" id="alert">
+</div>
+
+<div id="div1" ondrop="drop(event, 'div1')" ondragover="allowDrop(event)" class="content">
+<br>
+</div>
+<br>
+</body>
+{% endblock %}

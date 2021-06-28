@@ -1,0 +1,64 @@
+{% extends "web/layout.html" %}
+
+{% block body %}
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll("[id^='bot']").forEach(d => {
+    d.addEventListener("click", function () {
+      window.location.replace("/bot/" + d.id.split("bot")[1])
+    })
+  })
+
+})
+
+
+</script>
+
+<div class="bodyflex">
+
+{% for bot in bots %}
+<div id="bot{{ bot.id }}">
+{% if not bot.title %}
+
+<strong>Untitled</strong>
+
+{% endif %}
+
+<strong>{{ bot.title }}</strong>
+<br>
+{% if bot.valid_image %}
+<img src="{{ bot.image }}" class="explore_image"><br>
+{% endif %}
+<div style="font-size: x-small;">{{ bot.description }}</div>
+
+</div>
+{% endfor %}
+</div>
+
+<nav aria-label="..." >
+    <ul class="pagination justify-content-center">
+    {% if previous %}
+    <li class="page-item">
+        <form action="/explore" method="post">
+        {% csrf_token %} 
+        <input type="hidden" value= {{ page }} name="page">
+        <input type="hidden" value="previous" name="page_action">
+        <input type="submit" value="Previous" class="page-link">
+        </form>
+      </li>
+      {% endif %}
+      {% if next %}
+      <li class="page-item">
+        <form action="/explore" method="post">
+            {% csrf_token %} 
+            <input type="hidden" value= {{ page }} name="page">
+            <input type="hidden" value="next" name="page_action">
+            <input type="submit" value="Next" class="page-link">
+            </form>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% endblock %}

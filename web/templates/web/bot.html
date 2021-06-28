@@ -1,0 +1,204 @@
+{% extends "web/layout.html" %}
+
+{% block body %}
+<style>
+    .title {
+        font-size: xx-large;
+    }
+
+    .image {
+        height: 500px;
+        object-fit: contain;
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
+    }
+    .description {
+        margin: 20px;
+        font-size: 14px;
+    }
+    .container{
+        position: absolute;
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+  
+<script>
+
+  function loop() {
+    if (document.getElementById("looped").value == "off") {
+      //turn on
+      document.getElementById("looped").value = "on"
+      document.getElementById("list-group").outerHTML = "{{ looped_actions_html|safe }}"
+
+    } else {
+      //turn off
+      document.getElementById("looped").value = "off"
+      document.getElementById("list-group").outerHTML = "{{ actions_html|safe }}"
+    }
+  }
+  
+    
+  function timer() {
+    const a = Date.now()
+    let current = null
+    document.getElementById("run_item").setAttribute("class", "page-item disabled") 
+    string = ""
+    fs = setInterval(failsafe, 200);
+    d = setInterval(function () {
+      current = Date.now()
+      document.title = parseInt((a - Date.now())/1000 + 4)
+      document.getElementById("run").value = parseInt((a - Date.now())/1000 + 4)
+      if (current - a >= 3000) {
+        clearInterval(d)
+        if ("{{ bot.title }}") {
+            document.title = 'Running {{ bot.title }}' 
+        } else {
+          document.title = 'Running Untitled'
+        }
+        
+        document.getElementById("run").value = "Running"
+        fetch('/jsonstatus', {
+        method: 'PUT',
+        body: JSON.stringify({
+          status: true
+        })
+        })
+        
+        
+        d2 = setInterval(function () {
+          fetch('/jsonstatus')
+          .then(response => response.json())
+        .then(status => {
+          console.log(status["status"])
+        if (!status["status"]) {
+          clearInterval(d2)
+          document.title = 'Tedious.com' 
+          document.getElementById("run").value = "Run"
+          document.getElementById("run_item").setAttribute("class", "page-item")
+          clear_screen()
+          clearInterval(fs) 
+        }
+        });
+        }, 100)
+      }
+    }, 10)
+    return true
+  }
+  var string = ""
+  function failsafe(){ 
+        fetch('/listen')
+        .then(response => {
+
+            if (response.status == 500 || response.ok != true){
+                return ""
+            }
+           return response.json() 
+        }
+        )
+        .then(data => {
+            if (data[0] == "delete") {
+                if (string.length > 0) {
+                    string = string.slice(0, -1)
+                    console.log(string); 
+                    failsafe_out(string)
+                }
+            }
+            if (data[0] == "space") {
+                string += " "
+                console.log(string);
+                failsafe_out(string)
+            }
+            if (data[0] != "none" && data[0] != "space" && data[0] != "delete" && data[0] != undefined && data[0] != null && data[0] != "") {
+                string += data[0] 
+                console.log(string); 
+                failsafe_out(string)
+            }
+
+            if (string == "{{ bot.failsafe }}" && string != "") {
+                fetch('/jsonstatus', {
+                method: 'PUT',
+                body: JSON.stringify({
+                status: false
+            })
+            })
+            console.log("failsafe activated")
+            clear_screen()
+            clearInterval(fs)
+            }
+        }
+        
+    ).catch(function(error) {
+        console.log(error);
+    });
+    }
+
+    function failsafe_out(string) {
+        document.getElementById("failsafe").value = string
+    }
+
+    function clear_screen() {
+        document.getElementById("failsafe").value = "Failsafe Screen will activate when bot is running."
+    }
+</script>
+{% if bot.title %}
+<div class="title"><strong>{{ bot.title }}</strong></div>
+{% else %}
+<div class="title"><strong>Untitled</strong></div>
+{% endif %}
+<span style="font-size: 11px;"><strong>Failsafe:</strong><i style="padding-left: 10px;">{{ bot.failsafe }}</i></span>
+<form action="/bot/{{ bot_id }}" method="post" onsubmit="return timer()">
+  {% csrf_token %} 
+  <input type="hidden" value="{{ bot_id }}" name="bot_id">
+  <ul class="pagination">
+    <li class="page-item" id="run_item"><input type="submit" value="Run" class="page-link" id="run"></li>
+  </ul>
+  <br>
+  
+</form>
+<input type="text" readonly size="3" style="width: 150px; height: 40px;" id="failsafe" class="form-control input" value="Failsafe Screen will activate when bot is running.">
+<br>
+
+<div class="container">
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapse1">Actions</a>
+            <div style="margin-left: 5%; display: inline; font-size: 11px;" >
+            <label for="looped">Looped</label>
+            <input type="checkbox" id="looped" onclick="loop()" value="off">
+          </div>
+          </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+          <ul class="list-group" id="list-group">
+            {{ actions_html|safe }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+
+
+<div style="display: inline-flex;">
+{% if bot.valid_image %}
+<div><img src="{{ bot.image }}" class="image"></div>
+{% endif %}
+<div class="description">
+{{ bot.description}}
+<br><br>
+
+</div>
+</div>
+
+
+
+
+{% endblock %}

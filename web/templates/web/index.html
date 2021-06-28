@@ -1,0 +1,227 @@
+{% extends "web/layout.html" %}
+
+{% block body %}
+<style>
+    .top {
+        border-style: solid;
+        border-width: 1px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-color: rgb(207, 207, 207);
+        background-color: rgb(221, 221, 221);
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .bottom {
+        border-style: solid;
+        border-top-width: 0px;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-color: rgb(207, 207, 207);
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .title {
+        text-align: center;
+        background-color: #aaaaaa;
+        padding: 30px;
+        color: white;
+        border-radius: 20px;
+        border-style: dotted;
+        border-width: 2px;
+    }
+    .section {
+        font-weight: bolder;
+        font-size: 40px;
+    }
+
+    .link {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        text-decoration: none;
+        color: #6ab8e9;
+    }
+
+    .link:focus {
+        outline: none;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+
+    .imag {
+        height: 60%;
+        width: 100%;
+        border-radius: 20px;
+        border-style: solid;
+        border-color: rgb(207, 207, 207);
+        border-width: 1px;
+    }
+
+    .minor_imag {
+        border-radius: 20px;
+        border-style: solid;
+        border-color: rgb(207, 207, 207);
+        border-width: 1px;
+    }
+
+    .italic {
+        font-style: italic;
+        font-size: 14px;
+    }
+
+</style>
+<script>
+    function scroll_(element) {
+        document.getElementById(element).scrollIntoView();
+    }
+</script>
+<div class="body">
+    <div class="title" id="top">
+    Welcome to <strong>Tedious.com</strong>, a bot builder website by <strong>Aaron Arellano</strong>. Create bots that complete Tedious tasks for you!
+    <br><br>
+    <strong>Note: </strong> Multiple features only work on <strong>Google Chrome</strong>.
+    </div>
+    <br>
+    <div class="section">
+        How To Create
+    </div>
+    <div class="top">
+        <strong>Create Page</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/VqMh9xW/C5-DF4-AC5-75-AC-41-A2-B799-1-E2-E35-CEBD63.jpg" alt="C5-DF4-AC5-75-AC-41-A2-B799-1-E2-E35-CEBD63" class="imag">
+        <br><br>
+        In the create page, you design bots by dragging actions and dropping them in to the action list on the right. Actions include <button class="link" onclick="scroll_('click')">Click</button>, 
+        <button class="link" onclick="scroll_('scroll')">Scroll</button>, <button class="link" onclick="scroll_('write')">Write</button>, <button class="link" onclick="scroll_('press')">Press</button>
+        , <button class="link" onclick="scroll_('loop')">Loop</button>, <button class="link" onclick="scroll_('endloop')">Endloop</button>, <button class="link" onclick="scroll_('wait')">Wait</button>, and much more.
+        As well, the image, title, description and <button class="link" onclick="scroll_('failsafe')">Failsafe Password</button> can be customised in the sidebar on the left. At the bottom of the sidebar are the 
+        <button class="link" onclick="scroll_('save_and_run')">Save and Run buttons</button>, and the <button class="link" onclick="scroll_('coordinate')">Coordinate Tracker</button>.
+    </div>
+    <div class="top" id="click">
+        <strong>Click Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/bBR51kn/Screenshot-2021-06-15-at-10-47-30-PM.png" alt="10-47-30-PM" class="minor_imag">
+        <br><br>
+        Click at X: ____, Y: ____. Use <button class="link" onclick="scroll_('coordinate')">Coordinate Tracker</button> to help find important coordinates
+    </div>
+    <div class="top" id="scroll">
+        <strong>Scroll Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/NN5ZNcc/Screenshot-2021-06-15-at-10-47-33-PM.png" alt="10-47-33-PM" class="minor_imag">
+        <br><br>
+        Scroll for ____ clicks
+    </div>
+    <div class="top" id="write">
+        <strong>Write Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/KNLzFhv/Screenshot-2021-06-15-at-10-47-35-PM.png" alt="10-47-35-PM" class="minor_imag">
+        <br><br>
+        Write ____ text
+    </div>
+    <div class="top" id="press">
+        <strong>Press Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/mBdfSNs/Screenshot-2021-06-15-at-10-47-38-PM.png" alt="10-47-38-PM" class="minor_imag">
+        <br><br>
+        Press ____ button
+    </div>
+    <div class="top" id="loop">
+        <strong>Loop Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/gmGhJNw/Screenshot-2021-06-15-at-10-47-42-PM.png" alt="10-47-42-PM" class="minor_imag">
+        <br><br>
+        Signals start of a loop that will repeat ____ iterations
+    </div>
+    <div class="top" id="endloop">
+        <strong>Endloop Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/sFzWxvC/Screenshot-2021-06-15-at-10-47-46-PM.png" alt="10-47-46-PM" class="minor_imag">
+        <br><br>
+        Signals the end of a loop
+    </div>
+    <div class="top" id="wait">
+        <strong>Wait Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/MnXT2gb/Screenshot-2021-06-15-at-10-47-50-PM.png" alt="S10-47-50-PM" class="minor_imag">
+        <br><br>
+        Wait for ____ milliseconds
+    </div>
+
+    <div class="top" id="wait">
+        <strong>Drag Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/9brJFqF/Screenshot-2021-06-26-at-6-42-45-PM.png" alt="6-42-45-PM" class="minor_imag">
+        <br><br>
+        Drag from x: ____ , y: ____ to x: ____ , y: ____  for ____ milliseconds. Can hold down mouse while doing so, or not.
+    </div>
+
+    <div class="top" id="wait">
+        <strong>Control Action</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/kSPv8LD/Screenshot-2021-06-26-at-6-42-50-PM.png" alt="6-42-50-PM" class="minor_imag">
+        <br><br>
+        Control press command + _____ + ______.
+    </div>
+
+    <div class="top" id="failsafe">
+        <strong>Failsafe</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/T8QhgRP/F6-ED6-C2-B-774-F-4-B67-9588-D71-F15642-FF2-4-5005-c.jpg" alt="F6-ED6-C2-B-774-F-4-B67-9588-D71-F15642-FF2-4-5005-c" class="minor_imag">
+        <br><br>
+        While the bot is running, the failsafe is activated. If the failsafe password is typed by the user, the bot stops running. The failsafe screen shows what characters have been 
+        typed by the user. The failsafe password allows the user to customize the password.
+        <br><br>
+        <strong>Note:</strong><span class="italic"> While bot is running, password must be typed slowly, at half-second intervals.</span>
+        
+    </div>
+    <div class="top" id="save_and_run">
+        <strong>Save & Run</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/kHYySJm/17-B8-E16-F-8959-473-D-A39-D-9995-DB5039-B6-4-5005-c.jpg" alt="17-B8-E16-F-8959-473-D-A39-D-9995-DB5039-B6-4-5005-c" class="minor_imag">
+        <br><br>
+        After customizing your wanted bot, save it by pressing the save button. Doing so will post the bot into the explore page and will redirect you into the explore page. 
+        Although, while making the bot, the user can test the bots actions by pressing the Run button, which will run the actions in the action list from top to bottom.
+    </div>
+    <div class="top" id="coordinate">
+        <strong>Coordinate Tracker</strong>
+    </div>
+    <div class="bottom">
+        <br>
+        <img src="https://i.ibb.co/54dknRQ/A5867567-1-F8-D-4-CF5-90-F0-FC9-C6771-B256-4-5005-c.jpg" alt="A5867567-1-F8-D-4-CF5-90-F0-FC9-C6771-B256-4-5005-c" class="minor_imag">
+        <br><br>
+        Turning on the coordinate tracker will allow for the user to see the coordinates of the mouse on the screen. Use the coordinate tracker for Click actions.
+    </div>
+    
+</div>
+
+{% endblock %}

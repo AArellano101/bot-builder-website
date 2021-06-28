@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+    <title>Tedious.com</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .body {
+                margin-top: 20px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+                margin-right: 20px;
+                
+            }
+        .bodyflex {
+                margin-top: 30px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+                margin-right: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                
+            }
+
+        .bodyflex > div {
+            padding: 20px;
+            width: 210px;
+            height: 170px;
+            margin: 20px;
+            background-color: #a67bcf;
+            color: white;
+            border-style: solid;
+            border-color: #656565;
+            border-width: 2px;
+            cursor: pointer;
+            overflow: scroll;
+            border-radius: 25px;
+        }
+         
+         .explore_image {
+            max-width:100%; 
+            max-height:100%;
+            border-style: solid;
+            border-color: black;
+            border-width: 2px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+         }
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #9649c9;">
+        <a class="navbar-brand" href="/" style="color: rgb(217, 176, 255);"><strong>TEDIOUS</strong></a>
+        
+        <div>
+            <br>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/create" style="color: white;">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/explore" style="color: white;">Explore</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="body">
+        {% block body %}
+        {% endblock %}
+    </div>
+      
+</body>
